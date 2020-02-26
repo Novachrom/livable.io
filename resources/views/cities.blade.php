@@ -72,6 +72,7 @@
                 <th scope="col">Traffic Time Index</th>
                 <th scope="col">Quality of Life Index</th>
                 <th scope="col">Restaurant Price Index</th>
+                <th scope="col">Air quality index</th>
             </tr>
             </thead>
             <tbody>
@@ -86,6 +87,7 @@
                     <td>{{$city->traffic_time_index}}</td>
                     <td>{{$city->quality_of_life_index}}</td>
                     <td>{{$city->restaurant_price_index}}</td>
+                    <td>{{$city->aqi->aqi}}</td>
                 </tr>
             @endforeach
             </tbody>

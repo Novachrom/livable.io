@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('/', 'CitiesController@index');
+Route::get('/cities', 'CitiesController@index');
+Route::get('/', 'CountriesController@index');
+Route::get('/countries/{name}', 'CountriesController@show')->name('country');
