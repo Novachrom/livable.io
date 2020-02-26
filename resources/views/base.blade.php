@@ -60,6 +60,12 @@
         </div>
     </div>
     <div class="container">
+        <form class="form-inline" action="{{ route('search') }}">
+            <label class="sr-only" for="inlineFormInputName2">Search</label>
+            <input type="text" name="q" class="form-control mb-2 mr-sm-2" id="search" placeholder="Search">
+
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
         @yield('content')
     </div>
     </body>

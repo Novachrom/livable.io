@@ -20,6 +20,15 @@ class CitiesController extends Controller
     {
         $cities = $this->citiesService->getCititesPaginated();
 
-        return response()->view('index', compact('cities'));
+        return response()->view('cities', compact('cities'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('q', '');
+        $cities = $this->citiesService->searchCities($query);
+        $cities->appends(['q' => $query]);
+
+        return response()->view('cities', compact('cities'));
     }
 }

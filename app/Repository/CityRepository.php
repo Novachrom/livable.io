@@ -83,4 +83,9 @@ class CityRepository
             ->where('countries.name', $countryName)
             ->paginate();
     }
+
+    public function fullTextSearch(string $query, int $perPage): LengthAwarePaginator
+    {
+        return City::search($query)->paginate($perPage);
+    }
 }

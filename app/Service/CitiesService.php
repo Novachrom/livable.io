@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class CitiesService
 {
-    private const CITIES_PER_PAGE = 100;
+    private const CITIES_PER_PAGE = 50;
 
     /** @var NumbeoApiClient */
     private $numbeoApiClient;
@@ -81,5 +81,10 @@ class CitiesService
     public function getCitiesForCountry(string $countryName): LengthAwarePaginator
     {
         return $this->cityRepository->getCitiesForCountry($countryName, self::CITIES_PER_PAGE);
+    }
+
+    public function searchCities(string $query): LengthAwarePaginator
+    {
+        return $this->cityRepository->fullTextSearch($query, self::CITIES_PER_PAGE);
     }
 }

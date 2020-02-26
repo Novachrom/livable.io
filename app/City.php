@@ -4,10 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class City extends Model
 {
     use SoftDeletes;
+    use SearchableTrait;
+
+    protected $searchable = [
+        'columns' => [
+            'cities.name' => 10,
+            'countries.name' => 5
+        ],
+        'joins' => [
+            'countries' => ['cities.country_id', 'countries.id']
+        ]
+    ];
 
     protected $fillable = ['numbeo_city_id'];
 

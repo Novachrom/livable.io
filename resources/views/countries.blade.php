@@ -1,6 +1,7 @@
 @extends('base')
 
 @section('content')
+    @parent
     Countries:
     <div class="list-group">
         @foreach($countries as $country)

@@ -12,5 +12,6 @@
 */
 
 Route::get('/cities', 'CitiesController@index');
+Route::get('/cities/search', 'CitiesController@search')->name('search');
 Route::get('/', 'CountriesController@index');
 Route::get('/countries/{name}', 'CountriesController@show')->name('country');
