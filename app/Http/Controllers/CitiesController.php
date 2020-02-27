@@ -25,7 +25,10 @@ class CitiesController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->get('q', '');
+        $query = $request->get('q', $request->get('\q', ''));
+        if(empty($query)) {
+            return redirect()->route('cities');
+        }
         $cities = $this->citiesService->searchCities($query);
         $cities->appends(['q' => $query]);
 
