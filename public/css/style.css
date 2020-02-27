@@ -1,3 +1,15 @@
+
+
+
+/* Nova edits */
+
+.list-group {
+    border: 1px solid #1B4AA5;
+}
+
+/* Orig */
+
+
 html, body {
     background-color: #fff;
     color: #636b6f;
