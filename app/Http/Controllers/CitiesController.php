@@ -16,9 +16,11 @@ class CitiesController extends Controller
         $this->citiesService = $citiesService;
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $cities = $this->citiesService->getCititesPaginated();
+        $params = $request->all();
+        $cities = $this->citiesService->getCititesPaginated($params);
+        $cities->appends($request->query());
 
         return response()->view('cities', compact('cities'));
     }
@@ -29,8 +31,8 @@ class CitiesController extends Controller
         if(empty($query)) {
             return redirect()->route('cities');
         }
-        $cities = $this->citiesService->searchCities($query);
-        $cities->appends(['q' => $query]);
+        $cities = $this->citiesService->searchCities($query, $request->all());
+        $cities->appends($request->query());
 
         return response()->view('cities', compact('cities'));
     }

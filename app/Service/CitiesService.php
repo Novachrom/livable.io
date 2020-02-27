@@ -38,9 +38,10 @@ class CitiesService
         $this->cityRepository->saveNumbeoCities($cities);
     }
 
-    public function getCititesPaginated(int $perPage = 100): LengthAwarePaginator
+    public function getCititesPaginated(array $params = [], int $perPage = 100): LengthAwarePaginator
     {
-        return $this->cityRepository->getCitiesPaginated($perPage);
+
+        return $this->cityRepository->getCitiesPaginated($perPage, $params);
     }
 
     public function removeEmptyNumbeoCities(): void
@@ -91,14 +92,14 @@ class CitiesService
     }
 
 
-    public function getCitiesForCountry(string $countryName): LengthAwarePaginator
+    public function getCitiesForCountry(string $countryName, array $params): LengthAwarePaginator
     {
-        return $this->cityRepository->getCitiesForCountry($countryName, self::CITIES_PER_PAGE);
+        return $this->cityRepository->getCitiesForCountry($countryName, self::CITIES_PER_PAGE, $params);
     }
 
-    public function searchCities(string $query): LengthAwarePaginator
+    public function searchCities(string $query, array $params): LengthAwarePaginator
     {
-        return $this->cityRepository->fullTextSearch($query, self::CITIES_PER_PAGE);
+        return $this->cityRepository->fullTextSearch($query, self::CITIES_PER_PAGE, $params);
     }
 
     public function importNumbeoLatLang(): void

@@ -4,14 +4,24 @@ namespace App\Repository;
 
 use App\City;
 use App\Country;
+use App\Decorator\QueryDecoratorCollection;
 use App\DTO\Numbeo\City as NumbeoCityDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class CityRepository
 {
+    /** @var QueryDecoratorCollection */
+    private $queryDecorators;
+
+    public function __construct(QueryDecoratorCollection $queryDecorators)
+    {
+        $this->queryDecorators = $queryDecorators;
+    }
+
     /**
      * @param NumbeoCityDTO[] $cities
      */
@@ -45,9 +55,12 @@ class CityRepository
         }
     }
 
-    public function getCitiesPaginated(int $perPage): LengthAwarePaginator
+    public function getCitiesPaginated(int $perPage, array $params): LengthAwarePaginator
     {
-        return City::with('country', 'aqi')
+        $query = City::with('country', 'aqi');
+
+        return $this->queryDecorators
+            ->decorate($query, $params)
             ->paginate($perPage);
     }
 
@@ -78,18 +91,26 @@ class CityRepository
      * @param string $countryName
      * @return Collection<City>
      */
-    public function getCitiesForCountry(string $countryName, int $perPage): LengthAwarePaginator
+    public function getCitiesForCountry(string $countryName, int $perPage, array $params): LengthAwarePaginator
     {
-        return City::query()->with('country', 'aqi')
+        $query = City::query()->with('country', 'aqi')
             ->select('cities.*')
             ->join('countries', 'cities.country_id', '=', 'countries.id')
-            ->where('countries.name', $countryName)
-            ->paginate();
+            ->where('countries.name', $countryName);
+
+        return $this->queryDecorators
+            ->decorate($query, $params)
+            ->paginate($perPage);
     }
 
-    public function fullTextSearch(string $query, int $perPage): LengthAwarePaginator
+    public function fullTextSearch(string $searchQuery, int $perPage, array $params): LengthAwarePaginator
     {
-        return City::search($query)->paginate($perPage);
+        /** @var Builder $query */
+        $query = City::search($searchQuery);
+
+        return $this->queryDecorators
+            ->decorate($query, $params)
+            ->paginate($perPage);
     }
 
     public function updateNumbeoLatLang(int $numbeoCityId, float $lat, float $lng): int

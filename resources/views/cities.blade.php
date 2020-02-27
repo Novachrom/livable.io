@@ -7,15 +7,15 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">City</th>
-            <th scope="col">Country</th>
-            <th scope="col">Cost of living</th>
-            <th scope="col">Health Care Index</th>
-            <th scope="col">Crime Index</th>
-            <th scope="col">Traffic Time Index</th>
-            <th scope="col">Quality of Life Index</th>
-            <th scope="col">Restaurant Price Index</th>
-            <th scope="col">Air quality index</th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'name']) }}">City</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'country']) }}">Country</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'cost_of_living']) }}">Cost of living</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'health_care_index']) }}"></a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'crime_index']) }}">Crime Index</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'traffic_time_index']) }}">Traffic Time Index</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'quality_of_life_index']) }}">Quality of Life Index</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'restaurant_price_index']) }}">Restaurant Price Index</a></th>
+            <th scope="col"><a href="{{ request()->fullUrlWithQuery(['sort_by' => 'aqi']) }}">Air quality index</a></th>
         </tr>
         </thead>
         <tbody>
