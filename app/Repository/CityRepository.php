@@ -8,6 +8,7 @@ use App\DTO\Numbeo\City as NumbeoCityDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CityRepository
 {
@@ -37,6 +38,8 @@ class CityRepository
             $cityEntity->quality_of_life_index = $city->getQualityOfLifeIndex();
             $cityEntity->restaurant_price_index = $city->getRestaurantPriceIndex();
             $cityEntity->country_id = $country->id;
+            $cityEntity->latitude = $city->getLatitude();
+            $cityEntity->longitude = $city->getLongitude();
 
             $cityEntity->save();
         }
@@ -87,5 +90,12 @@ class CityRepository
     public function fullTextSearch(string $query, int $perPage): LengthAwarePaginator
     {
         return City::search($query)->paginate($perPage);
+    }
+
+    public function updateNumbeoLatLang(int $numbeoCityId, float $lat, float $lng): int
+    {
+        return DB::table('cities')
+            ->where('numbeo_city_id', $numbeoCityId)
+            ->update(['longitude' => $lng, 'latitude' => $lat]);
     }
 }

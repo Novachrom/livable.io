@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
+        "malhal/laravel-geographical": "^1.0",
         "nicolaslopezj/searchable": "^1.12",
         "php-http/curl-client": "^2.1",
         "php-http/guzzle6-adapter": "^2.0"

@@ -54,6 +54,7 @@ class NumbeoApiClient
 
         $res = [];
         foreach($citiesResponse['cities'] as $index => $city) {
+            if($index >= 10) break;
             echo $index.PHP_EOL;
             $indices = $this->sendRequest('indices', 'get', ['city_id' => $city['city_id']]);
 
@@ -66,7 +67,9 @@ class NumbeoApiClient
                 (float)($indices["crime_index"] ?? 0),
                 (float)($indices["traffic_time_index"] ?? 0),
                 (float)($indices["quality_of_life_index"] ?? 0),
-                (float)($indices["restaurant_price_index"] ?? 0)
+                (float)($indices["restaurant_price_index"] ?? 0),
+                (float)$city['latitude'],
+                (float)$city['longitude']
             );
         }
 

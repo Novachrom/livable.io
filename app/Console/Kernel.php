@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+         $schedule->command('numbeo:get_lat_lang')
+              ->withoutOverlapping();
+         $schedule->command('aqi:fill')
+             ->withoutOverlapping();
     }
 
     /**

@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Numbeo;
 
 use App\Service\CitiesService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class FillAqi extends Command
+class GetNumbeoLatLang extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'aqi:fill';
+    protected $signature = 'numbeo:get_lat_lang';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fills data from aqicn api for each city';
+    protected $description = 'Fill geo data for each city';
 
     /** @var CitiesService */
     private $citiesService;
@@ -44,11 +44,11 @@ class FillAqi extends Command
     public function handle()
     {
         try {
-            $this->citiesService->fillAqi();
+            $this->citiesService->importNumbeoLatLang();
             $this->info("Success");
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-            $this->error("Error: ".$exception->getTraceAsString());
+            $this->error("Error filling cities from numbeo: ".$exception->getMessage());
         }
     }
 }

@@ -57,6 +57,7 @@ class CitiesService
         /** @var City $city */
         foreach ($this->cityRepository->getAllCities() as $index => $city)
         {
+            $cityAqi = $city->aqi;
             try {
                 //because us cities have states in their names, e.g. "New York, US", we need to extract city name without state
                 $name = explode(',', $city->name)[0];
@@ -64,13 +65,25 @@ class CitiesService
                 $apiResponse = $this->aqicnApiClient->getDataForCity($name);
 
                 /** @var CityAqi $cityAqi */
-                $cityAqi = $city->aqi;
                 $cityAqi->aqi = $apiResponse->getAqi();
                 $cityAqi->save();
                 echo $index . ' aqi: '.$city->name.PHP_EOL;
             } catch (AqicnApiException $e) {
-                echo $index . ' no aqi: '.$city->name.PHP_EOL;
-                continue;
+
+                //if no data for city by its name then trying to fetch it by coordinates
+                try {
+                    $apiResponse = $this->aqicnApiClient->getDataForLatLng((string)$city->latitude, (string)$city->longitude);
+                    $cityAqi->aqi = $apiResponse->getAqi();
+                    $cityAqi->latitude = $city->latitude;
+                    $cityAqi->longitude = $city->longitude;
+                    $cityAqi->is_geo = true;
+                    $cityAqi->save();
+
+                    echo $index . 'geo aqi: '.$city->name.PHP_EOL;
+                } catch (AqicnApiException $e) {
+                    echo $index . ' no geo aqi: '.$city->name.PHP_EOL;
+                }
+
             } catch (\Exception $e) {
                 Log::debug("failed fetching apicn: " . $e->getMessage());
             }
@@ -86,5 +99,19 @@ class CitiesService
     public function searchCities(string $query): LengthAwarePaginator
     {
         return $this->cityRepository->fullTextSearch($query, self::CITIES_PER_PAGE);
+    }
+
+    public function importNumbeoLatLang(): void
+    {
+        $response = $this->numbeoApiClient->sendRequest('cities', 'get');
+        $cities = $response['cities'];
+
+        foreach ($cities as $city)
+        {
+            if(empty($city['latitude']) || empty($city['longitude'])) {
+                continue;
+            }
+            $this->cityRepository->updateNumbeoLatLang((int)$city['city_id'], (float)$city['latitude'], (float)$city['longitude']);
+        }
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "213707a0d5aee3c5db6f16499cd843c1",
+    "content-hash": "a8f62043b8e367628cf09d5884ba9e6b",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1030,6 +1030,64 @@
                 "storage"
             ],
             "time": "2020-02-05T18:14:17+00:00"
+        },
+        {
+            "name": "malhal/laravel-geographical",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malhal/Laravel-Geographical.git",
+                "reference": "ce31276ea1db1f25baf7485ce740f7dbb54862b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/malhal/Laravel-Geographical/zipball/ce31276ea1db1f25baf7485ce740f7dbb54862b5",
+                "reference": "ce31276ea1db1f25baf7485ce740f7dbb54862b5",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.*|6.*",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Malhal\\Geographical\\": "src/"
+                },
+                "files": [
+                    "src/Geographical.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malcolm Hall",
+                    "email": "composer@malcolmhall.com"
+                }
+            ],
+            "description": "Easily add longitude and latitude columns to your records and use inherited functionality for calculating distances",
+            "keywords": [
+                "Laravel Geographical",
+                "Laravel-Geographical",
+                "Malcolm Hall",
+                "framework",
+                "geographical",
+                "laravel",
+                "latitude",
+                "longitude",
+                "malhal",
+                "models",
+                "user"
+            ],
+            "time": "2020-02-17T08:53:33+00:00"
         },
         {
             "name": "monolog/monolog",

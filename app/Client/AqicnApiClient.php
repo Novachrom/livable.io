@@ -52,4 +52,15 @@ class AqicnApiClient
 
         return FeedResponse::fromArray($response['data']);
     }
+
+    public function getDataForLatLng(string $lat, string $lng): FeedResponse
+    {
+        $path = urlencode(sprintf('geo:%s;%s', $lat, $lng));
+        $response = $this->sendRequest($path);
+        if(empty($response['status']) || $response['status'] === 'error' || !is_array($response['data'])) {
+            throw new AqicnApiException("Send request to aqicn api failed: " . $response['data'] ?? '');
+        }
+
+        return FeedResponse::fromArray($response['data']);
+    }
 }

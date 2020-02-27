@@ -33,7 +33,13 @@ class City
     /** @var float */
     private $restaurantPriceIndex;
 
-    public function __construct(int $cityId, string $name, string $countryName, float $costOfLiving, float $healthCareIndex, float $crimeIndex, float $trafficTimeIndex, float $qualityOfLifeIndex, float $restaurantPriceIndex)
+    /** @var float */
+    private $latitude;
+
+    /** @var float */
+    private $longitude;
+
+    public function __construct(int $cityId, string $name, string $countryName, float $costOfLiving, float $healthCareIndex, float $crimeIndex, float $trafficTimeIndex, float $qualityOfLifeIndex, float $restaurantPriceIndex, float $latitude, float $longitude)
     {
         $this->cityId = $cityId;
         $this->name = $name;
@@ -44,6 +50,8 @@ class City
         $this->trafficTimeIndex = $trafficTimeIndex;
         $this->qualityOfLifeIndex = $qualityOfLifeIndex;
         $this->restaurantPriceIndex = $restaurantPriceIndex;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
     }
 
     /**
@@ -116,5 +124,21 @@ class City
     public function getRestaurantPriceIndex(): float
     {
         return $this->restaurantPriceIndex;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLatitude(): float
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLongitude(): float
+    {
+        return $this->longitude;
     }
 }
