@@ -40,3 +40,11 @@ html, body {
 .m-b-md {
     margin-bottom: 30px;
 }
+.logo {
+    color: #636b6f;
+    text-decoration: none;
+}
+.logo:hover {
+    color: #636b6f;
+    text-decoration: none;
+}
