@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Client\AqicnApiClient;
 use App\Client\NumbeoApiClient;
+use App\Decorator\CityCostOfLivingFilter;
 use App\Decorator\CitySortingDecorator;
 use App\Decorator\QueryDecoratorCollection;
 use App\Factory\AqicnApiClientFactory;
@@ -50,7 +51,8 @@ class AppServiceProvider extends ServiceProvider
             ->needs(QueryDecoratorCollection::class)
             ->give(function () {
                 return new QueryDecoratorCollection(
-                    new CitySortingDecorator()
+                    new CitySortingDecorator(),
+                    new CityCostOfLivingFilter()
                 );
             });
     }
