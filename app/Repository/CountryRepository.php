@@ -16,4 +16,11 @@ class CountryRepository
             ->orderBy('name')
             ->get();
     }
+
+    public function getCountryByName(string $name): ?Country
+    {
+        return Country::query()
+            ->where('name', $name)
+            ->first();
+    }
 }

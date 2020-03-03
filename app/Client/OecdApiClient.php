@@ -38,14 +38,24 @@ class OecdApiClient
     public function getBliData()
     {
         $response = $this->sendRequest('BLI');
-        $res = [];
+        $items = [];
         foreach ($response['dataSets'][0]['observations'] as $key => $values) {
             $item = [];
             foreach (explode(':', $key) as $index => $dimension) {
-                $name = $response['structure']['dimensions'][$index];
+                $name = $response['structure']['dimensions']['observation'][$index]['name'];
+                $item[$name] = $response['structure']['dimensions']['observation'][$index]['values'][$dimension]['name'];
+                $item['values'] = $values;
             }
-            $res[] = $item;
-            return $values;
+            $items[] = $item;
+        }
+
+        $res = [];
+        foreach ($items as $item) {
+            if(!isset($res[$item['Country']])) {
+                $res[$item['Country']] = [];
+            }
+            $key = $item['Indicator'] . ' ' . $item['Inequality'];
+            $res[$item['Country']][$key] = $item['values'][0];
         }
         return $res;
     }
