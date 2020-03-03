@@ -28,7 +28,14 @@ class CountriesController extends Controller
         return \response()->view('countries', with(compact('countries')));
     }
 
-    public function show($name, Request $request): Response
+    public function show($name): Response
+    {
+        $country = $this->countryRepository->getCountryByName($name);
+
+        return response()->view('country-details', compact('country'));
+    }
+
+    public function cities($name, Request $request): Response
     {
         $cities = $this->citiesService->getCitiesForCountry($name, $request->all());
         $cities->appends($request->query());

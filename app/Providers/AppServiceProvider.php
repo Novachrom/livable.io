@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Client\AqicnApiClient;
 use App\Client\NumbeoApiClient;
+use App\Client\OecdApiClient;
 use App\Decorator\CityCostOfLivingFilter;
 use App\Decorator\CitySortingDecorator;
 use App\Decorator\QueryDecoratorCollection;
 use App\Factory\AqicnApiClientFactory;
 use App\Factory\NumbeoApiClientFactory;
+use App\Factory\OecdApiClientFactory;
 use App\Repository\CityRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -43,6 +45,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AqicnApiClient::class, function () {
             /** @var AqicnApiClientFactory $factory */
             $factory = $this->app->get(AqicnApiClientFactory::class);
+
+            return $factory->create();
+        });
+
+        $this->app->singleton(OecdApiClient::class, function () {
+            /** @var OecdApiClientFactory $factory */
+            $factory = $this->app->get(OecdApiClientFactory::class);
 
             return $factory->create();
         });
