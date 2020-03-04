@@ -158,7 +158,7 @@
         });
 
         var vectorSource = new ol.source.Vector({
-            url: '{{url('data/countries.geojson')}}',
+            url: '{{url('data/countries.geojson?v=2')}}',
             format: new ol.format.GeoJSON()
         });
 
