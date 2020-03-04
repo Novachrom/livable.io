@@ -33,7 +33,8 @@ class CitiesController extends Controller
         }
         $cities = $this->citiesService->searchCities($query, $request->all());
         $cities->appends($request->query());
+        $country = $this->citiesService->isOneCountry($cities) ? $cities[0]->country : null;
 
-        return response()->view('cities', compact('cities'));
+        return response()->view('cities', compact('cities', 'country'));
     }
 }

@@ -115,4 +115,23 @@ class CitiesService
             $this->cityRepository->updateNumbeoLatLang((int)$city['city_id'], (float)$city['latitude'], (float)$city['longitude']);
         }
     }
+
+    /**
+     * Checks if all cities belong to one country
+     *
+     * @param array|Collection $cities
+     * @return bool
+     */
+    public function isOneCountry($cities): bool
+    {
+        if(empty($cities)) {
+            return false;
+        }
+
+        $countriesCount = collect($cities)
+            ->unique('country')
+            ->count();
+
+        return $countriesCount === 1;
+    }
 }
