@@ -55,6 +55,7 @@
         </tbody>
     </table>
     <div class="content">{{ $cities->links() }}</div>
+    <span id="info"></span>
     <div id="map" class="map"></div>
     <div id="popup" class="ol-popup" style="display:none">
         <div class="card" style="width: 18rem;">
@@ -67,25 +68,41 @@
     </div>
     <script type="text/javascript">
 
+        function getAveragePoint(cities) {
+            let X = 0.0;
+            let Y = 0.0;
+            let Z = 0.0;
+
+            for (city of cities) {
+                let lat = city.latitude * Math.PI / 180;
+                let lon = city.longitude * Math.PI / 180;
+
+                let a = Math.cos(lat) * Math.cos(lon);
+                let b = Math.cos(lat) * Math.sin(lon);
+                let c = Math.sin(lat);
+
+                X += a;
+                Y += b;
+                Z += c;
+            }
+
+            X /= cities.length;
+            Y /= cities.length;
+            Z /= cities.length;
+
+            let latitude = Math.atan2(Y, X);
+            let hyp = Math.sqrt(X * X + Y * Y);
+            let longitude = Math.atan2(Z, hyp);
+
+            return [(latitude * 180 / Math.PI), (longitude * 180 / Math.PI)];
+        }
+
         var cities = {!!  json_encode($cities) !!};
         // console.log(cities);
         function createMap(locations) {
 
-            var mapCenter = ol.proj.fromLonLat([ -74.0446426, 40.6892534 ]);
-            var view = new ol.View({
-                center: mapCenter,
-                zoom: 10
-            });
-
-            var map = new ol.Map({
-                target: 'map',
-                layers: [
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM()
-                    })
-                ],
-                view: view
-            });
+            var mapCenter = ol.proj.fromLonLat(getAveragePoint(locations));
+            var map = createCountriesMap(mapCenter);
 
             // Array of Icon features
             var iconFeatures = [];
@@ -98,6 +115,7 @@
                 var iconFeature = new ol.Feature({
                     type: 'click',
                     name: locations[i].name + ', ' + locations[i].country.name,
+                    isCity: true,
                     geometry: new ol.geom.Point(ol.proj.transform([locations[i].longitude, locations[i].latitude], 'EPSG:4326', 'EPSG:3857')),
                 });
 
@@ -129,10 +147,10 @@
 
             var overlay = new ol.Overlay({
                 element: container,
-                autoPan: true,
-                autoPanAnimation: {
-                    duration: 250
-                }
+                // autoPan: true,
+                // autoPanAnimation: {
+                //     duration: 250
+                // }
             });
             map.addOverlay(overlay);
 
@@ -153,7 +171,7 @@
                     return feature;
                 });
 
-                if (feature) {
+                if (feature && feature.getProperties().isCity) {
                     var coord = feature.getGeometry().getCoordinates();
                     var props = feature.getProperties();
                     content.innerHTML =
@@ -162,7 +180,7 @@
                         '<div style="width:220px; margin-top:3px">' + props.name + '</div></a>';
 
                     // Offset the popup so it points at the middle of the marker not the tip
-                    overlay.setPosition(evt.coordinate);
+                    overlay.setPosition(coord);
                     container.style.display = 'block';
                 } else {
                     overlay.setPosition(undefined);
@@ -174,6 +192,124 @@
             return map;
         }
 
+        function createCountriesMap(center) {
+            var style = new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255, 255, 255, 0.6)'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#319FD3',
+                    width: 1
+                }),
+                text: new ol.style.Text({
+                    font: '12px Calibri,sans-serif',
+                    fill: new ol.style.Fill({
+                        color: '#000'
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: '#fff',
+                        width: 3
+                    })
+                })
+            });
+
+            var vectorLayer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    url: '{{url('data/countries.geojson')}}',
+                    format: new ol.format.GeoJSON()
+                }),
+                style: function(feature) {
+                    style.getText().setText(feature.get('name'));
+                    return style;
+                }
+            });
+
+            var map = new ol.Map({
+                layers: [
+                    // new ol.layer.Tile({
+                    //     source: new ol.source.OSM()
+                    // }),
+                    vectorLayer,
+                ],
+                target: 'map',
+                view: new ol.View({
+                    center: center,
+                    zoom: 4
+                })
+            });
+
+
+            var highlightStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: '#f00',
+                    width: 1
+                }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,0,0,0.1)'
+                }),
+                text: new ol.style.Text({
+                    font: '12px Calibri,sans-serif',
+                    fill: new ol.style.Fill({
+                        color: '#000'
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: '#f00',
+                        width: 3
+                    })
+                })
+            });
+
+            var featureOverlay = new ol.layer.Vector({
+                source: new ol.source.Vector(),
+                map: map,
+                style: function(feature) {
+                    highlightStyle.getText().setText(feature.get('name'));
+                    return highlightStyle;
+                }
+            });
+
+            var highlight;
+            var displayFeatureInfo = function(pixel) {
+
+                vectorLayer.getFeatures(pixel).then(function(features) {
+                    var feature = features.length ? features[0] : undefined;
+                    var info = document.getElementById('info');
+                    if (features.length) {
+                        info.innerHTML = feature.getId() + ': ' + feature.get('name');
+                    } else {
+                        info.innerHTML = '&nbsp;';
+                    }
+
+                    if (feature !== highlight) {
+                        if (highlight) {
+                            featureOverlay.getSource().removeFeature(highlight);
+                        }
+                        if (feature) {
+                            featureOverlay.getSource().addFeature(feature);
+                        }
+                        highlight = feature;
+                    }
+                });
+
+            };
+
+
+            // map.on('pointermove', function(evt) {
+            //     if (evt.dragging) {
+            //         return;
+            //     }
+            //     var pixel = map.getEventPixel(evt.originalEvent);
+            //     displayFeatureInfo(pixel);
+            // });
+
+            // map.on('click', function(evt) {
+            //     displayFeatureInfo(evt.pixel);
+            // });
+
+            return map;
+        }
+
         var map = createMap(cities.data);
+        // let map = createCountriesMap();
     </script>
 @endsection
