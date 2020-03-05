@@ -6,6 +6,7 @@ use App\City;
 use App\CityAqi;
 use App\Client\AqicnApiClient;
 use App\Client\NumbeoApiClient;
+use App\DTO\Aqicn\FeedResponse;
 use App\Exceptions\AqicnApiException;
 use App\Repository\CityRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -60,36 +61,49 @@ class CitiesService
         {
             $cityAqi = $city->aqi;
             try {
-                //because us cities have states in their names, e.g. "New York, US", we need to extract city name without state
-                $name = explode(',', $city->name)[0];
-                $name = strtolower($name);
-                $apiResponse = $this->aqicnApiClient->getDataForCity($name);
+
+                if($cityAqi->is_geo) {
+                    $apiResponse = $this->getAqiForLatLon((string)$city->latitude, (string)$city->longitude);
+                } else {
+                    $apiResponse = $this->getAqiForCity($city);
+                }
 
                 /** @var CityAqi $cityAqi */
                 $cityAqi->aqi = $apiResponse->getAqi();
                 $cityAqi->save();
                 echo $index . ' aqi: '.$city->name.PHP_EOL;
             } catch (AqicnApiException $e) {
-
-                //if no data for city by its name then trying to fetch it by coordinates
-                try {
-                    $apiResponse = $this->aqicnApiClient->getDataForLatLng((string)$city->latitude, (string)$city->longitude);
-                    $cityAqi->aqi = $apiResponse->getAqi();
-                    $cityAqi->latitude = $city->latitude;
-                    $cityAqi->longitude = $city->longitude;
-                    $cityAqi->is_geo = true;
-                    $cityAqi->save();
-
-                    echo $index . 'geo aqi: '.$city->name.PHP_EOL;
-                } catch (AqicnApiException $e) {
-                    echo $index . ' no geo aqi: '.$city->name.PHP_EOL;
-                }
+                echo $index . '  no aqi: '.$city->name.PHP_EOL;
+                continue;
 
             } catch (\Exception $e) {
-                Log::debug("failed fetching apicn: " . $e->getMessage());
+                Log::debug("failed fetching aqicn: " . $e->getMessage());
             }
         }
     }
+
+    private function getAqiForCity(City $city): FeedResponse
+    {
+        try {
+            //because us cities have states in their names, e.g. "New York, US", we need to extract city name without state
+            $name = explode(',', $city->name)[0];
+            $name = strtolower($name);
+            $apiResponse = $this->aqicnApiClient->getDataForCity($name);
+
+            return $apiResponse;
+        } catch (AqicnApiException $e) {
+
+           return $this->getAqiForLatLon((string)$city->latitude, (string)$city->longitude);
+        }
+    }
+
+    private function getAqiForLatLon(string $lat, string $lon): FeedResponse
+    {
+        $apiResponse = $this->aqicnApiClient->getDataForLatLng($lat, $lon);
+
+        return $apiResponse;
+    }
+
 
 
     public function getCitiesForCountry(string $countryName, array $params): LengthAwarePaginator

@@ -24,6 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+         $schedule->command('numbeo:fill_cities')
+              ->withoutOverlapping();
          $schedule->command('numbeo:get_lat_lang')
               ->withoutOverlapping();
          $schedule->command('aqi:fill')
