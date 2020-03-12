@@ -64,5 +64,5 @@
     </div>
 
     <div class="content">{{ $cities->links() }}</div>
-    <script src="{{ url('js/main.js') }}"></script>
+    <script src="{{ url('js/main.js?v=2') }}"></script>
 @endsection
