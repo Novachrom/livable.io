@@ -1,10 +1,3 @@
-<form class="form-inline" id="cost-filter-form" action="{{ request()->fullUrl() }}">
-    <label class="sr-only" for="inlineFormInputName2">Search</label>
-    <input type="number" name="cost_of_living_from" @if(request()->has('cost_of_living_from')) value="{{ request()->get('cost_of_living_from') }}" @endif class="form-control mb-2 mr-sm-2" id="search" placeholder="Cost of living from">
-    <input type="number" name="cost_of_living_to" @if(request()->has('cost_of_living_to')) value="{{ request()->get('cost_of_living_to') }}" @endif class="form-control mb-2 mr-sm-2" id="search" placeholder="Cost of living to">
-
-    <button type="submit" class="btn btn-primary mb-2">Filter</button>
-</form>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -37,4 +30,3 @@
     @endforeach
     </tbody>
 </table>
-<div class="content">{{ $cities->links() }}</div>
