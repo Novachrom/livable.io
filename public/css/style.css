@@ -8,6 +8,7 @@
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link, .btn-primary {
     background-color: #c14350;
+    border-color:#c14350;
 }
 
 /* Orig */
