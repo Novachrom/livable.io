@@ -5,6 +5,9 @@
     background-color:#1c1f46;
     color:#FFF;   
 }
+.card a, .list-group a, .listgroup-item a {
+    color:#ffedbd;
+}
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link, .btn-primary {
     background-color: #c14350;
