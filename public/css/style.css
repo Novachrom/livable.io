@@ -1,8 +1,10 @@
 
 /* Nova edits */
 
-.card, .list-group  {
+.card, .list-group, .list-group-item  {
     background-color:#1c1f46;
+    color:#FFF;
+    
 }
 
 /* Orig */
