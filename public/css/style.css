@@ -1,11 +1,9 @@
 
-
-
 /* Nova edits */
 
-/*.list-group {*/
-/*    border: 1px solid red;!*#1B4AA5;*!*/
-/*}*/
+.card, .list-group  {
+    background-color:#1c1f46;
+}
 
 /* Orig */
 
