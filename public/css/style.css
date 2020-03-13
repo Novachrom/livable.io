@@ -3,6 +3,11 @@
 
 /* Nova edits */
 
+.card, .list-group  {
+    background-color:#1c1f46;
+}
+
+
 /*.list-group {*/
 /*    border: 1px solid red;!*#1B4AA5;*!*/
 /*}*/
