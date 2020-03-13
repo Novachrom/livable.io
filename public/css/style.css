@@ -3,8 +3,11 @@
 
 .card, .list-group, .list-group-item  {
     background-color:#1c1f46;
-    color:#FFF;
-    
+    color:#FFF;   
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link, .btn-primary {
+    background-color: #c14350;
 }
 
 /* Orig */
