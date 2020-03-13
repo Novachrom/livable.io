@@ -37,4 +37,14 @@ class CitiesController extends Controller
 
         return response()->view('cities', compact('cities', 'country'));
     }
+
+    public function show(string $country, string $city): Response
+    {
+        $city = $this->citiesService->getCityDetails($country, $city);
+        if($city === null) {
+            abort(404);
+        }
+
+        return response()->view('city-details', compact('city'));
+    }
 }

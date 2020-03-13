@@ -119,4 +119,14 @@ class CityRepository
             ->where('numbeo_city_id', $numbeoCityId)
             ->update(['longitude' => $lng, 'latitude' => $lat]);
     }
+
+    public function getCityByNameAndCountry(string $countryName, string $cityName): ?City
+    {
+        return City::query()->with('country', 'aqi')
+            ->select('cities.*')
+            ->join('countries', 'cities.country_id', '=', 'countries.id')
+            ->where('countries.name', $countryName)
+            ->where('cities.name', $cityName)
+            ->first();
+    }
 }

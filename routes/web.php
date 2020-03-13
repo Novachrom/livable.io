@@ -16,9 +16,4 @@ Route::get('/cities/search', 'CitiesController@search')->name('search');
 Route::get('/', 'CountriesController@index');
 Route::get('/countries/{name}', 'CountriesController@show')->name('country.details');
 Route::get('/countries/{name}/cities', 'CountriesController@cities')->name('country.cities');
-Route::get('/tst', function () {
-
-    /** @var \App\Client\OecdApiClient $cl */
-    $cl = app()->get(\App\Client\OecdApiClient::class);
-    dd($cl->getBliData());
-});
+Route::get('/countries/{country}/{city}', 'CitiesController@show')->name('city.details');

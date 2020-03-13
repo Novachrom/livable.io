@@ -17,7 +17,7 @@
     @foreach($cities as $index => $city)
         <tr>
             <th scope="row">{{$index+1}}</th>
-            <td>{{$city->name}}</td>
+            <td><a href="{{ route('city.details', [$city->country->name, $city->name]) }}">{{$city->name}}</a></td>
             <td>{{$city->country->name}}</td>
             <td>{{$city->cost_of_living}}</td>
             <td>{{$city->health_care_index}}</td>

@@ -148,4 +148,9 @@ class CitiesService
 
         return $countriesCount === 1;
     }
+
+    public function getCityDetails(string $countryName, string $cityName): ?City
+    {
+        return $this->cityRepository->getCityByNameAndCountry($countryName, $cityName);
+    }
 }
