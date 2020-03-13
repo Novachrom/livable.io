@@ -32,4 +32,16 @@ class City extends Model
     {
         return $this->hasOne(CityAqi::class, 'city_id', 'id')->withDefault();
     }
+
+    public function getCostOfLivingWithCurrency(): string
+    {
+        $currency = $this->country->currency;
+        if(empty($currency) || $currency->code === 'USD') {
+            return $this->cost_of_living . ' USD';
+        }
+
+        $value = $this->cost_of_living * $currency->usd_rate;
+
+        return $value . " {$currency->code}";
+    }
 }

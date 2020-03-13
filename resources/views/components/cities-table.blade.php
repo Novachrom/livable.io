@@ -19,7 +19,7 @@
             <th scope="row">{{$index+1}}</th>
             <td><a href="{{ route('city.details', [$city->country->name, $city->name]) }}">{{$city->name}}</a></td>
             <td>{{$city->country->name}}</td>
-            <td>{{$city->cost_of_living}}</td>
+            <td>{{$city->getCostOfLivingWithCurrency()}}</td>
             <td>{{$city->health_care_index}}</td>
             <td>{{$city->crime_index}}</td>
             <td>{{$city->traffic_time_index}}</td>

@@ -16,4 +16,9 @@ class Country extends Model
     protected $casts = [
         'oecd_bli_data' => 'array',
     ];
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id', 'id');
+    }
 }

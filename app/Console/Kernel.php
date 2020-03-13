@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
               ->withoutOverlapping();
          $schedule->command('aqi:fill')
              ->withoutOverlapping();
+         $schedule->command('currency:fill')
+             ->hourly();
     }
 
     /**

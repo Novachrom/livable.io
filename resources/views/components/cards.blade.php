@@ -7,7 +7,7 @@
 {{--                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--}}
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cost of living: ${{$city->cost_of_living}} / mo</li>
+                <li class="list-group-item">Cost of living: {{$city->getCostOfLivingWithCurrency()}} / mo</li>
             </ul>
 {{--            <div class="card-footer">--}}
 {{--                <small class="text-muted">Last updated 3 mins ago</small>--}}

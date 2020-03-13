@@ -4,7 +4,7 @@
     <ul class="list-group">
         <li class="list-group-item">Name: {{ $city->name }}</li>
         <li class="list-group-item">Country: {{$city->country->name}}</li>
-        <li class="list-group-item">Cost of living: {{$city->cost_of_living}}</li>
+        <li class="list-group-item">Cost of living: {{$city->getCostOfLivingWithCurrency()}}</li>
         <li class="list-group-item">Health care index: {{$city->health_care_index}}</li>
         <li class="list-group-item">Crime index: {{$city->crime_index}}</li>
         <li class="list-group-item">Traffic time index: {{$city->traffic_time_index}}</li>
