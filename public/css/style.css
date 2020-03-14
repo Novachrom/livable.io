@@ -15,9 +15,12 @@
     font-size: 17px;
 }
 
+body, .logo, a {
+    font-family: "Helvetica Neue" !important;
+}
+
 body {
     background:#f7f7f7 !important;
-    font-family: "Helvetica Neue" !important;
 }
 
 .card {
