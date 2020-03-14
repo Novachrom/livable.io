@@ -1,8 +1,16 @@
 
 /* Nova edits */
 
+body {
+    background:#f3f3f3;
+}
+
+.card {
+    border:1px solid #e8e8e8;
+}
+
 .card, .list-group, .list-group-item  {
-    background-color:#f3f3f3;
+    background-color:#FFF;
     /*color:#FFF;*/
 }
 a, .card a, .list-group a, .listgroup-item a {
