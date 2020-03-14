@@ -2,11 +2,11 @@
 /* Nova edits */
 
 .card, .list-group, .list-group-item  {
-    background-color:#1c1f46;
-    color:#FFF;   
+    background-color:#f3f3f3;
+    /*color:#FFF;*/
 }
-.card a, .list-group a, .listgroup-item a {
-    color:#ffedbd;
+a, .card a, .list-group a, .listgroup-item a {
+    color:#2e6d9e;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link, .btn-primary {
