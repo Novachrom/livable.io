@@ -1,7 +1,12 @@
 
 /* Nova edits */
 
-
+.logo {
+    color: #1f4a6b;
+    text-decoration: none;
+    font-size: 47px;
+    font-weight: 400;
+}
 .btn-primary {
     font-weight:600;
 }
