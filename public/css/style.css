@@ -2,7 +2,10 @@
 /* Nova edits */
 
 
-
+.nav-pills .nav-link {
+    font-weight: 600;
+    font-size: 15px;
+}
 
 .card a {
     font-size: 17px;
@@ -26,8 +29,8 @@ a, .card a, .list-group a, .listgroup-item a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link, .btn-primary {
-    background-color: #c14350;
-    border-color:#c14350;
+    background-color: #a9dbb6;
+    border:none;
 }
 
 /* Orig */
