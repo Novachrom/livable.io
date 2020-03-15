@@ -46,6 +46,7 @@ div#pills-tabContent {
 
 .card a {
     font-size: 17px;
+    font-weight:400;
 }
 
 body, .logo, a {
