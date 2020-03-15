@@ -25,7 +25,7 @@ body, .logo, a {
 }
 
 body {
-    background:#f7f7f7 !important;
+    background:#fafafa !important;
 }
 
 .card {
@@ -35,7 +35,7 @@ body {
 }
 
 .card, .list-group, .list-group-item  {
-    background-color:#F3F3F3;
+    background-color:#FFF;
     /*color:#FFF;*/
 }
 a, .card a, .list-group a, .listgroup-item a {
