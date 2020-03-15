@@ -30,10 +30,12 @@ body {
 
 .card {
     border:1px solid #f5f5f5;
+    border-radius: 2px;
+    /*box-shadow: 0 3px 30px 4px #ffffff;*/
 }
 
 .card, .list-group, .list-group-item  {
-    background-color:#FFF;
+    background-color:#F3F3F3;
     /*color:#FFF;*/
 }
 a, .card a, .list-group a, .listgroup-item a {
