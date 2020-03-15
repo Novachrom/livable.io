@@ -18,6 +18,7 @@ div#pills-tabContent {
 .card-body {
     padding: 15px 25px 5px;
     border-bottom: 1px solid #fafafa;
+    flex: none;
 }
 .list-group-item {
     padding: 15px 25px 15px;
@@ -62,6 +63,7 @@ body {
     border-radius: 2px;
     /*box-shadow: 0 3px 30px 4px #ffffff;*/
     box-shadow: 0 2px 28px 0 rgba(0,0,0,0.03);
+    min-height: 220px;
 }
 
 .card, .list-group, .list-group-item  {
