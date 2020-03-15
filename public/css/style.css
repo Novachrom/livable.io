@@ -1,6 +1,10 @@
 
 /* Nova edits */
 
+div#pills-tabContent {
+    padding-top: 5px;
+}
+
 .form-control {
     
     padding: 25px 15px;
@@ -19,7 +23,11 @@
     padding: 15px 25px 15px;
 }
 .mb-3, .my-3 {
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
+    margin-top: 20px !important;
+    padding: 20px;
+    border-top: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
 }
 .logo {
     color: #1f4a6b;
