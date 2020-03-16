@@ -44,4 +44,29 @@ class City extends Model
 
         return $value . " {$currency->code}";
     }
+
+    public function customCalculations()
+    {
+        return $this
+            ->belongsToMany(CustomCalculation::class, 'city_calculations', 'city_id', 'calculation_id')
+            ->withPivot('value');
+    }
+
+    public function getAvailableVariables(): array
+    {
+        $res = [
+            'cost_of_living' => $this->cost_of_living,
+            'health_care_index' => $this->health_care_index,
+            'crime_index' => $this->crime_index,
+            'traffic_time_index' => $this->traffic_time_index,
+            'quality_of_life_index' => $this->quality_of_life_index,
+            'restaurant_price_index' => $this->restaurant_price_index,
+            'aqi' => data_get($this, 'aqi.aqi', 0)
+        ];
+        foreach ($this->customCalculations as $calculation) {
+            $res[$calculation->var_name] = $calculation->pivot->value;
+        }
+
+        return $res;
+    }
 }

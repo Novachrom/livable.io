@@ -11,5 +11,8 @@
         <li class="list-group-item">Quality of life index: {{$city->quality_of_life_index}}</li>
         <li class="list-group-item">Restaurant price index: {{$city->restaurant_price_index}}</li>
         <li class="list-group-item">Air quality index: {{$city->aqi->aqi}}</li>
+        @foreach($city->customCalculations as $calculation)
+            <li class="list-group-item">{{ $calculation->var_name }}: {{ $calculation->pivot->value }}</li>
+        @endforeach
     </ul>
 @endsection

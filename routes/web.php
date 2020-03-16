@@ -17,3 +17,4 @@ Route::get('/', 'CountriesController@index');
 Route::get('/countries/{name}', 'CountriesController@show')->name('country.details');
 Route::get('/countries/{name}/cities', 'CountriesController@cities')->name('country.cities');
 Route::get('/countries/{country}/{city}', 'CitiesController@show')->name('city.details');
+Route::resource('calculations', 'CalculationController');

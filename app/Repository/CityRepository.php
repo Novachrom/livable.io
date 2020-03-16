@@ -122,11 +122,20 @@ class CityRepository
 
     public function getCityByNameAndCountry(string $countryName, string $cityName): ?City
     {
-        return City::query()->with('country', 'aqi')
+        return City::query()->with('country', 'aqi', 'customCalculations')
             ->select('cities.*')
             ->join('countries', 'cities.country_id', '=', 'countries.id')
             ->where('countries.name', $countryName)
             ->where('cities.name', $cityName)
             ->first();
+    }
+
+    public function getAvavilableVariables(): array
+    {
+        /** @var City $city */
+        $city = City::query()->first();
+        $variables = $city->getAvailableVariables();
+
+        return array_keys($variables);
     }
 }
