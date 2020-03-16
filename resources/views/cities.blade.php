@@ -59,7 +59,7 @@
             @include('components.cities-table', ['cities' => $cities])
         </div>
         <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
-            @includeUnless(empty($country), 'components.map', ['cities' => $cities, 'country' => $country])
+            @include('components.map', ['cities' => $cities, 'country' => $country ?? null])
         </div>
     </div>
 

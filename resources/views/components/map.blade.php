@@ -243,12 +243,14 @@
                 return;
             }
 
-            for (feature of features) {
-                console.log()
-                if(feature.get('name') === selectedCountry.name) {
-                    console.log('feature set: ', feature.get('name'));
-                    featureOverlay.getSource().addFeature(feature);
-                    return;
+            if(selectedCountry) {
+                for (feature of features) {
+                    console.log()
+                    if (feature.get('name') === selectedCountry.name) {
+                        console.log('feature set: ', feature.get('name'));
+                        featureOverlay.getSource().addFeature(feature);
+                        return;
+                    }
                 }
             }
         });
@@ -256,7 +258,7 @@
         return map;
     }
 
-    var country = {!! $country->toJson() !!};
+    var country = {!! empty($country) ? 'null' : $country->toJson() !!};
     var map = createMap(cities.data, country);
     document.getElementById('pills-map-tab').addEventListener('click', function () {
         console.log('event');

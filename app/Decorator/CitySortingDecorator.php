@@ -8,6 +8,8 @@ class CitySortingDecorator implements QueryDecorator
 {
     private const FIELD_NAME = 'sort_by';
 
+    private const DEFAULT_SORT_BY = 'quality_of_life_index';
+
     private const ALLOWED_VALUES = [
         'name',
         'country',
@@ -23,10 +25,10 @@ class CitySortingDecorator implements QueryDecorator
     public function decorate(Builder $query, array $params): Builder
     {
         if(!isset($params[self::FIELD_NAME])) {
-            return $query;
+            $value = self::DEFAULT_SORT_BY;
+        } else {
+            $value = $params[self::FIELD_NAME];
         }
-
-        $value = $params[self::FIELD_NAME];
 
         if(!in_array($value, self::ALLOWED_VALUES)) {
             return $query;
