@@ -10,11 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/cities', 'CitiesController@index')->name('cities');
 Route::get('/cities/search', 'CitiesController@search')->name('search');
 Route::get('/', 'CountriesController@index');
 Route::get('/countries/{name}', 'CountriesController@show')->name('country.details');
 Route::get('/countries/{name}/cities', 'CountriesController@cities')->name('country.cities');
 Route::get('/countries/{country}/{city}', 'CitiesController@show')->name('city.details');
-Route::resource('calculations', 'CalculationController');
+
+Auth::routes(['register' => false]);
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::resource('calculations', 'CalculationController');
+});
