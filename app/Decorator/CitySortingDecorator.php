@@ -25,7 +25,7 @@ class CitySortingDecorator implements QueryDecorator
     public function decorate(Builder $query, array $params): Builder
     {
         if(!isset($params[self::FIELD_NAME])) {
-            $value = self::DEFAULT_SORT_BY;
+            return $query->orderBy(self::DEFAULT_SORT_BY, 'desc');
         } else {
             $value = $params[self::FIELD_NAME];
         }
