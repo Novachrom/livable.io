@@ -14,6 +14,7 @@ use App\Factory\ExchangeRateApiClientFactory;
 use App\Factory\NumbeoApiClientFactory;
 use App\Factory\OecdApiClientFactory;
 use App\Repository\CityRepository;
+use App\Service\CostOfLivingCalculator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -73,5 +74,9 @@ class AppServiceProvider extends ServiceProvider
                     new CityCostOfLivingFilter()
                 );
             });
+
+//        $instance =
+//
+        $this->app->singleton(CostOfLivingCalculator::class);
     }
 }

@@ -39,6 +39,13 @@
             </select>
             <button type="submit" class="btn btn-primary mb-2">Filter</button>
         </form>
+        <form class="form-inline" action="{{ route('search') }}">
+            <label class="sr-only" for="currnecy_mode">Currency mode</label>
+            <select class="form-control mb-2 mr-sm-2" id="currnecy_mode" name="currnecy_mode" onchange="document.location='{{ route('currency-mode.set') . '?currency_mode=' }}' + this.options[this.selectedIndex].value">
+                <option class="currency-mode" value="local" @if(session('currency_mode') === 'local' || !session()->has('currency_mode')) selected @endif>Local Currencies</option>
+                <option class="currency-mode" value="default" @if(session('currency_mode') === 'default') selected @endif>USD</option>
+            </select>
+        </form>
     </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">

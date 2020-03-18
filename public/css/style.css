@@ -6,7 +6,7 @@ div#pills-tabContent {
 }
 
 .form-control {
-    
+
     padding: 25px 15px;
     color: #989898 !important;
     background-color: #fff;
@@ -156,4 +156,10 @@ html, body {
 /* When moving the mouse over the close button */
 .closebtn:hover {
     color: black;
+}
+
+select.form-control {
+    padding: 15px 11px;
+    height: auto;
+    width: 210px;
 }

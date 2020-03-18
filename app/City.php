@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Service\CostOfLivingCalculator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -35,14 +36,10 @@ class City extends Model
 
     public function getCostOfLivingWithCurrency(): string
     {
-        $currency = $this->country->currency;
-        if(empty($currency) || $currency->code === 'USD') {
-            return $this->cost_of_living . ' USD';
-        }
+        /** @var CostOfLivingCalculator $service */
+        $service = app(CostOfLivingCalculator::class);
 
-        $value = $this->cost_of_living * $currency->usd_rate;
-
-        return $value . " {$currency->code}";
+        return $service->calculate($this);
     }
 
     public function customCalculations()

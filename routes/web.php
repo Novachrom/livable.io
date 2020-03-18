@@ -16,6 +16,7 @@ Route::get('/cities/search', 'CitiesController@search')->name('search');
 Route::get('/countries/{name}', 'CountriesController@show')->name('country.details');
 Route::get('/countries/{name}/cities', 'CountriesController@cities')->name('country.cities');
 Route::get('/countries/{country}/{city}', 'CitiesController@show')->name('city.details');
+Route::get('/currency-mode/set', 'CurrencyModeController@set')->name('currency-mode.set');
 
 Auth::routes(['register' => false]);
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {

@@ -228,4 +228,6 @@ return [
 
     ],
 
+    'cost_of_living_coef' => 41.6
+
 ];
