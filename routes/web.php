@@ -23,3 +23,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('calculations', 'CalculationController');
 });
+Route::get('tst', function () {
+    /** @var \App\Service\CityPhotoProvider $srvs */
+    $srvs = app()->make(\App\Service\CityPhotoProvider::class);
+
+    $city = \App\City::query()->where('name', 'Kiev (Kyiv)')->first();
+
+    dd($srvs->getPhoto($city));
+});

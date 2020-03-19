@@ -6,6 +6,7 @@ use App\Client\AqicnApiClient;
 use App\Client\ExchangeRateApiClient;
 use App\Client\NumbeoApiClient;
 use App\Client\OecdApiClient;
+use App\Client\TeleportApiClient;
 use App\Decorator\CityCostOfLivingFilter;
 use App\Decorator\CitySortingDecorator;
 use App\Decorator\QueryDecoratorCollection;
@@ -13,7 +14,10 @@ use App\Factory\AqicnApiClientFactory;
 use App\Factory\ExchangeRateApiClientFactory;
 use App\Factory\NumbeoApiClientFactory;
 use App\Factory\OecdApiClientFactory;
+use App\Factory\TeleportApiClientFactory;
 use App\Repository\CityRepository;
+use App\Service\CityPhotoProvider;
+use App\Service\CityPhotoProviderInterface;
 use App\Service\CostOfLivingCalculator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -66,6 +70,13 @@ class AppServiceProvider extends ServiceProvider
             return $factory->create();
         });
 
+        $this->app->singleton(TeleportApiClient::class, function () {
+            /** @var TeleportApiClientFactory $factory */
+            $factory = $this->app->get(TeleportApiClientFactory::class);
+
+            return $factory->create();
+        });
+
         $this->app->when(CityRepository::class)
             ->needs(QueryDecoratorCollection::class)
             ->give(function () {
@@ -78,5 +89,10 @@ class AppServiceProvider extends ServiceProvider
 //        $instance =
 //
         $this->app->singleton(CostOfLivingCalculator::class);
+
+        $this->app->bind(
+            CityPhotoProviderInterface::class,
+            CityPhotoProvider::class
+        );
     }
 }

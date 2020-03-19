@@ -36,7 +36,7 @@ div#pills-tabContent {
     font-size: 47px;
     font-weight: 400;
 }
-.btn-primary, 
+.btn-primary,
 .btn-danger,
 .nav-pills,
 .nav-link.active,
@@ -168,4 +168,9 @@ select.form-control {
     padding: 15px 11px;
     height: auto;
     width: 210px;
+}
+
+.city-photo {
+    height: 380px;
+    background: #e8e8e8;
 }

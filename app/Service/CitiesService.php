@@ -9,6 +9,7 @@ use App\Client\NumbeoApiClient;
 use App\DTO\Aqicn\FeedResponse;
 use App\Exceptions\AqicnApiException;
 use App\Repository\CityRepository;
+use App\Utils\OutputInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -26,11 +27,15 @@ class CitiesService
     /** @var AqicnApiClient */
     private $aqicnApiClient;
 
-    public function __construct(NumbeoApiClient $apiClient, CityRepository $cityRepository, AqicnApiClient $aqicnApiClient)
+    /** @var CityPhotoProviderInterface */
+    private $photoProvider;
+
+    public function __construct(NumbeoApiClient $apiClient, CityRepository $cityRepository, AqicnApiClient $aqicnApiClient, CityPhotoProviderInterface $photoProvider)
     {
         $this->numbeoApiClient = $apiClient;
         $this->cityRepository = $cityRepository;
         $this->aqicnApiClient = $aqicnApiClient;
+        $this->photoProvider = $photoProvider;
     }
 
     public function fillNumbeoCities(): void
@@ -152,5 +157,20 @@ class CitiesService
     public function getCityDetails(string $countryName, string $cityName): ?City
     {
         return $this->cityRepository->getCityByNameAndCountry($countryName, $cityName);
+    }
+
+    public function importCityPhotos(OutputInterface $output): void
+    {
+        $cities = $this->cityRepository->getAllCities();
+        foreach ($cities as $city) {
+            $photo = $this->photoProvider->getPhoto($city);
+            if (empty($photo)) {
+                $output->write("city {$city->id}, {$city->name}: no photo");
+                continue;
+            }
+            $city->photo = $photo;
+            $city->save();
+            $output->write("city {$city->id}, {$city->name}: photo");
+        }
     }
 }
