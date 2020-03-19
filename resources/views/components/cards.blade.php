@@ -4,7 +4,7 @@
         <div class="card">
             <div class="city-photo">
             @if(empty($city->photo))
-
+{{--                todo: image placeholder --}}
             @else
                 <img src="{{ $city->photo }}" class="card-img-top" alt="{{ $city->name }}">
             @endif

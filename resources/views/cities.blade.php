@@ -55,6 +55,9 @@
             <a class="nav-link" id="pills-table-tab" data-toggle="pill" href="#pills-table" role="tab" aria-controls="pills-table" aria-selected="false">Table</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" id="pills-list-tab" data-toggle="pill" href="#pills-list" role="tab" aria-controls="pills-list" aria-selected="false">List</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" id="pills-map-tab" data-toggle="pill" href="#pills-map" role="tab" aria-controls="pills-map" aria-selected="false">Map</a>
         </li>
     </ul>
@@ -64,6 +67,9 @@
         </div>
         <div class="tab-pane fade" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
             @include('components.cities-table', ['cities' => $cities])
+        </div>
+        <div class="tab-pane fade" id="pills-list" role="tabpanel" aria-labelledby="pills-list-tab">
+            @include('components.list', ['cities' => $cities, 'country' => $country ?? null])
         </div>
         <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
             @include('components.map', ['cities' => $cities, 'country' => $country ?? null])
