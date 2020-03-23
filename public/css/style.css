@@ -39,7 +39,7 @@ div#pills-tabContent {
 .btn-danger,
 .nav-link.active,
 .nav-pills .show>.nav-link {
-    background-color: #a9dbb6;
+    background-color: #a9dbb6 !important;
     border:none;
 } {
     font-weight:600;
