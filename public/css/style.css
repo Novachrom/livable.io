@@ -6,7 +6,6 @@ div#pills-tabContent {
 }
 
 .form-control {
-
     padding: 25px 15px;
     color: #989898 !important;
     background-color: #fff;
@@ -38,7 +37,6 @@ div#pills-tabContent {
 }
 .btn-primary,
 .btn-danger,
-.nav-pills,
 .nav-link.active,
 .nav-pills .show>.nav-link {
     background-color: #a9dbb6;
